@@ -30,10 +30,13 @@ class Album extends React.Component {
 
   render() {
     const { loading, musicsApiResponse, musicList } = this.state;
+
     if (loading) {
       return <Loading />;
     }
+
     const { collectionName, artistName } = musicsApiResponse[0];
+
     return (
       <div data-testid="page-album">
         <Header />
