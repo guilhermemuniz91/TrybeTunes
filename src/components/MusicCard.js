@@ -1,12 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 
 class MusicCard extends React.Component {
   state = {
     loading: false,
     isChecked: false,
+  };
+
+  componentDidMount() {
+    this.favoriteList();
+  }
+
+  favoriteList = async () => {
+    const { trackId } = this.props;
+    const favoritesApiResponse = await getFavoriteSongs();
+    if (favoritesApiResponse.some((music) => music.trackId === trackId)) { // Verifica se a música está na lista de favoritos
+      this.setState({ isChecked: true });
+    }
   };
 
   toogleFavorite = async ({ target: { checked } }) => {
